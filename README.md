@@ -126,6 +126,10 @@
 
 Hệ thống hoạt động theo mô hình **edge-AI**: inference thực hiện ngay trên thiết bị, kết quả được đẩy về hệ thống quản lý trang trại (Farm Management System) qua REST API hoặc message queue do lớp tích hợp xử lý. Repo này **chỉ chứa lớp inference + pipeline huấn luyện**, phần tích hợp hạ tầng tuỳ thuộc deployment context.
 
+Sơ đồ tổng quan pipeline dữ liệu của hệ thống:
+
+![Sơ đồ hệ thống](anhmota/anhsodohethong.jpg)
+
 ---
 
 ## Bài toán & Phương pháp kỹ thuật
@@ -142,6 +146,10 @@ Cho một ảnh đầu vào của trứng, hệ thống cần phân loại trứ
 | 3 | `trungchet` | **Trứng chết** (Dead) | Trứng không phát triển, phôi chết — cần loại bỏ khỏi lô ấp |
 
 > **Lưu ý thứ tự:** Class names được TensorFlow sắp xếp theo **thứ tự alphabet** của tên thư mục (`cuoi`, `dau`, `giua`, `trungchet`). Khi inference, `argmax` trả về index 0–3 tương ứng với `['15-21', '0-7', '8-14', 'trungchet']`.
+
+Minh hoạ 4 lớp giai đoạn phôi cùng ma trận nhầm lẫn (Confusion Matrix) thu được sau khi huấn luyện — độ chính xác phân loại đạt **98–99%** trên tập kiểm thử:
+
+![Bốn giai đoạn phát triển phôi trứng](anhmota/anh4giaidoan.jpg)
 
 ### Phương pháp: Transfer Learning
 
@@ -446,6 +454,10 @@ Fine-tune từ layer 100 = bắt đầu từ `block_7` trở đi, tức 54 layer
 - Backbone frozen → gradients chỉ flow qua head (~5K params) → học chậm.
 - 100 epochs đủ để head hội tụ mà không overfitting (do chỉ 5K params).
 
+Kết quả training/validation của Phase 1 — độ chính xác dao động quanh 84%, chưa đạt ngưỡng production vì backbone vẫn đóng băng ở ImageNet weights:
+
+![Kết quả Phase 1 trước fine-tuning](anhmota/modelchuatranferlearning.jpg)
+
 ### Phase 2 — Fine-tuning (Epochs 100–199)
 
 **Mục tiêu:** Tinh chỉnh 54 layers cuối của backbone để features phù hợp hơn với domain ảnh trứng.
@@ -470,6 +482,10 @@ Fine-tune từ layer 100 = bắt đầu từ `block_7` trở đi, tức 54 layer
 - Unfreeze đột ngột 54 layers với lr lớn → catastrophic forgetting (weights backbone ImageNet bị phá hủy).
 - RMSprop với `lr=1e-5` cập nhật weights nhỏ hơn, ổn định hơn Adam.
 - 100 epochs fine-tuning đủ để tinh chỉnh mà không overfit.
+
+Kết quả sau Phase 2 — độ chính xác cuối cùng đạt **~99%** trên cả tập train và validation, đủ điều kiện chuyển sang TFLite cho triển khai on-device:
+
+![Kết quả Phase 2 sau fine-tuning](anhmota/modelsaukhitranferlearning.jpg)
 
 ### Huấn luyện trên Google Colab
 
