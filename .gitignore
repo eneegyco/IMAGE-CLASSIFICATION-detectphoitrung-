@@ -1,0 +1,46 @@
+# Gradle
+.gradle/
+build/
+*/build/
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Captures
+captures/
+
+# Keystore
+*.jks
+*.keystore
+
+# Native build
+.cxx/
+*.so
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Models & dataset (không push dataset gốc & model lớn)
+DATASET-TRUNG/**/*.jpg
+DATASET-TRUNG/**/*.jpeg
+DATASET-TRUNG/**/*.png
+DATASET-TRUNG/**/*.bmp
+android/models/*.tflite
+android/models/*.pb
+android/models/*.h5
+android/models/*.pt
+android/models/*.onnx
