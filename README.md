@@ -1,8 +1,6 @@
-# 🥚 Egg Embryo Stage Detection — Enterprise Production System
+# Egg Embryo Stage Detection — Enterprise Production System
 
 > **Hệ thống Computer Vision cấp doanh nghiệp** phân loại hình ảnh trứng thành **4 giai đoạn phát triển phôi** trong thời gian thực, sử dụng Transfer Learning với **MobileNetV2** và triển khai inference on-device qua **TensorFlow Lite** trên thiết bị Android.
->
-> 📦 **Trạng thái dự án:** Production-ready • 🚀 **Phạm vi triển khai:** Smart Agriculture / Poultry Industry • 🏭 **Mô hình cung cấp:** Standalone SDK tích hợp vào dây chuyền ấp trứng công nghiệp
 
 ---
 
@@ -40,11 +38,11 @@
 
 ### Tính năng sản phẩm
 
-- 🔍 **Phân loại 4 giai đoạn phôi** trong thời gian thực qua camera (`dau`, `giua`, `cuoi`, `trungchet`).
-- 📱 **Inference on-device** bằng TensorFlow Lite — bảo mật dữ liệu, không phụ thuộc cloud, phản hồi dưới 100ms mỗi frame.
-- 🔄 **Pipeline huấn luyện tự động** gồm 2 giai đoạn (Feature Extraction → Fine-tuning) tái lập được 100% từ notebook.
-- 📦 **Multi-flavor build (Task API + Support Library)** cho phép lựa chọn engine TFLite tuỳ ứng dụng.
-- 🚀 **Model nhỏ gọn** (`mobinet.tflite` chỉ 2.7 MB) phù hợp cập nhật OTA và nhúng vào thiết bị IoT.
+- **Phân loại 4 giai đoạn phôi** trong thời gian thực qua camera (`dau`, `giua`, `cuoi`, `trungchet`).
+- **Inference on-device** bằng TensorFlow Lite — bảo mật dữ liệu, không phụ thuộc cloud, phản hồi dưới 100ms mỗi frame.
+- **Pipeline huấn luyện tự động** gồm 2 giai đoạn (Feature Extraction → Fine-tuning) tái lập được 100% từ notebook.
+- **Multi-flavor build (Task API + Support Library)** cho phép lựa chọn engine TFLite tuỳ ứng dụng.
+- **Model nhỏ gọn** (`mobinet.tflite` chỉ 2.7 MB) phù hợp cập nhật OTA và nhúng vào thiết bị IoT.
 
 ---
 
@@ -598,7 +596,7 @@ predicted_class = class_names[predicted_class_index]
 
 Project cung cấp **2 cách** để chạy inference trên Android, chọn qua `productFlavors`:
 
-#### Pipeline A — TensorFlow Lite Task Library (`lib_task_api`) ✅ Mặc định
+#### Pipeline A — TensorFlow Lite Task Library (`lib_task_api`) — Mặc định
 
 Sử dụng high-level API từ `org.tensorflow.lite.task.vision`, gói gọn toàn bộ quy trình:
 ```java
